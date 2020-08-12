@@ -39,6 +39,7 @@ if (notSignedIn) {
 ```
 
 > Why throw instead of conditionally rendering the UI?
+
 This is so that we can bail-out immediately of the render logic and so we can render the fallback immediately to prevent further effects to occur. For example, given that `useSignInRequired` and `useMobileOnly` throws a fallback UI:
 
 ```tsx
@@ -52,7 +53,7 @@ return (
 
 We don't have to check the user's authentication if the UI is only for mobile. Due to the nature of React hooks, we can't call `useSignInRequired` in a conditional way without producing another layer of component tree.
 
-## useFallbackBoundaryRefresh
+### useFallbackBoundaryRefresh
 
 `useFallbackBoundaryRefresh` is a hook that provides a function you can call to refresh the nearest ancestor `FallbackBoundary`. If called without a valid React element as an argument, it will attempt to remount the children, otherwise, it will render the given element as a fallback UI.
 
