@@ -34,6 +34,7 @@ export interface FallbackBoundaryProps {
 
 interface FallbackBoundaryState {
   fallback?: JSX.Element;
+  version: number;
 }
 
 /**
@@ -46,7 +47,9 @@ export default class FallbackBoundary
   constructor(props: FallbackBoundaryProps) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      version: 0,
+    };
   }
 
   public componentDidCatch(error: Error | JSX.Element): void {
@@ -55,6 +58,7 @@ export default class FallbackBoundary
       // Set fallback as the error
       this.setState({
         fallback: error,
+        version: 0,
       });
     } else {
       // Otherwise, pass the fallback to the ancestor
@@ -63,24 +67,19 @@ export default class FallbackBoundary
   }
 
   public refresh: FallbackBoundaryRefresh = (fallback) => {
+    const { state: { version } } = this;
     this.setState({
       fallback,
+      version: version + 1,
     });
   };
 
   public render(): JSX.Element {
-    const { state: { fallback }, props: { children } } = this;
-    if (fallback) {
-      return (
-        <FallbackContext.Provider value={this.refresh}>
-          { fallback }
-        </FallbackContext.Provider>
-      );
-    }
+    const { state: { fallback, version }, props: { children } } = this;
     return (
-      <>
-        { children }
-      </>
+      <FallbackContext.Provider value={this.refresh} key={`${version}`}>
+        { fallback ?? children }
+      </FallbackContext.Provider>
     );
   }
 }

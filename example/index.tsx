@@ -1,12 +1,15 @@
 import React, { useCallback } from 'react';
 import ReactDOM from 'react-dom';
-import { FallbackBoundary } from '..';
+import { FallbackBoundary, useFallbackBoundaryRefresh } from '..';
 import useSignInRequired from './hooks/useSignInRequired';
 
 const SignOut = () => {
+  const refresh = useFallbackBoundaryRefresh();
+
   const signOut = useCallback(() => {
     localStorage.removeItem('username');
-  }, []);
+    refresh();
+  }, [refresh]);
 
   return <button type="button" onClick={signOut}>Sign Out</button>;
 };

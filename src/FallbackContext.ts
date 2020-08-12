@@ -33,8 +33,6 @@ export type FallbackBoundaryRefresh = (fallback?: JSX.Element) => void;
 const FallbackContext = createContext<FallbackBoundaryRefresh | undefined>(undefined);
 
 /**
- * Used for fallback components only.
- *
  * Returns a callback that refreshes the fallback
  * boundary by setting a new fallback (if provided),
  * otherwise, attempts to remount the original
