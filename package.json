@@ -45,5 +45,6 @@
   },
   "description": "Easy error fallback handling in React",
   "repository": "https://github.com/LXSMNSYC/react-fallback.git",
-  "private": false
+  "private": false,
+  "dependencies": {}
 }
